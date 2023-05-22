@@ -8,6 +8,7 @@ while ($row = mysqli_fetch_array($result)){
     $faqs = $row;
     $faqs = array_map('trim', explode('|', $faqs['faqs']));
 }
+echo('<pre style=direction:ltr;text-align:left>');var_dump($faqs);echo('</pre>');
 mysqli_close($con);
 ?>
 <!DOCTYPE html>
@@ -53,6 +54,7 @@ mysqli_close($con);
         <!-- save faqs in database with ajax -->
         <div id="new_faq_wrap">
             <button id="faq_save_to_db">ذخيره</button>
+            <span id="result_text"></span>
         </div>
     </div>
 
