@@ -34,4 +34,17 @@ jQuery('document').ready(function($){
         $(this).closest('.faq_row').remove();
     });
 
+    /**
+     * ajax call
+     */
+    $('#faq_save_to_db').click(function(e){
+        $.ajax({
+            url: 'ajax.php',
+            type: 'post',
+            data: {},
+        }).done((resp) => {
+            console.log(resp);
+        });
+    });
+
 });

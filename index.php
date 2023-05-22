@@ -1,6 +1,14 @@
 <?php 
 $faqs = 'quesion1^answer1|question2^answer2|question3^answer3';
-$faqs = array_map('trim', explode('|', $faqs));
+require 'connection.php';
+$query = "SELECT * from faqs WHERE page_id = 12";
+$result = mysqli_query($con, $query);
+$faqs = array();
+while ($row = mysqli_fetch_array($result)){
+    $faqs = $row;
+    $faqs = array_map('trim', explode('|', $faqs['faqs']));
+}
+mysqli_close($con);
 ?>
 <!DOCTYPE html>
 <html lang="en">
