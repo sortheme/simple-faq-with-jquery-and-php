@@ -77,4 +77,7 @@ jQuery('document').ready(function($){
         });
     });
 
+
+    // console.log(window.location.protocol + " // " + window.location.host + ' // ' + window.location.pathname);
+
 });

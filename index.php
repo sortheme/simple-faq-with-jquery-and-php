@@ -67,7 +67,13 @@ mysqli_close($con);
         
         <!-- new faq with jquery -->
         <div id="new_faq_wrap">
-            <button id="new_faq_btn">+ add another FAQ</button>
+            <button id="new_faq_btn">
+                <?php if(!empty($faqs)){?>
+                    + add another FAQ
+                <?php }else{?>
+                    + add new FAQ
+                <?php }?>
+            </button>
         </div>
 
         <div id="faq_page_id">
@@ -76,7 +82,7 @@ mysqli_close($con);
         
         <!-- save faqs in database with ajax -->
         <div id="save_faq_wrap">
-            <button id="faq_save_to_db">ذخيره</button>
+            <button id="faq_save_to_db">SAVE</button>
             <p id="result_text"></p>
         </div>
     </div>
