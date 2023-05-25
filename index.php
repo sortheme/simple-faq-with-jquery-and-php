@@ -1,15 +1,23 @@
 <?php 
-$faqs = 'quesion1^answer1|question2^answer2|question3^answer3';
+// $faqs = 'quesion1^answer1|question2^answer2|question3^answer3';
+/**
+ * get  page_id
+ */
+$page_id='';
+if(isset($_GET['page_id'])){
+    $page_id = intval($_GET['page_id']);
+}
 require 'connection.php';
-$query = "SELECT * from faqs WHERE page_id = 12";
+$query = "SELECT * from faqs WHERE page_id = '$page_id'";
 $result = mysqli_query($con, $query);
 $faqs = array();
 while ($row = mysqli_fetch_array($result)){
     $faqs = $row;
     $faqs = array_map('trim', explode('|', $faqs['faqs']));
 }
-echo('<pre style=direction:ltr;text-align:left>');var_dump($faqs);echo('</pre>');
+// echo('<pre style=direction:ltr;text-align:left>');var_dump($faqs);echo('</pre>');
 mysqli_close($con);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,35 +34,50 @@ mysqli_close($con);
     <div class="container">
         <div id="faqs">
             <?php 
+            if(!empty($faqs)) :
+            $faq_index =1;
             foreach($faqs as $faq) { 
                 $faq = array_map('trim', explode('^', $faq));
             ?>
             <div class="faq_row">
-                <!-- question -->
-                <div class="faq_question">
-                    عنوان سوال<input type="text" name="" id="" value="<?php echo($faq[0]); ?>">
-                </div>
-                <!-- answer -->
-                <div class="faq_answer">
-                    پاسخ سوال<input type="text" name="" id="" value="<?php echo($faq[1]); ?>">
+                <!-- index number -->
+                <div class="faq_index"><?php echo ($faq_index); ?></div>
+                <!-- Question and Answer -->
+                <div class="faq_question_answer">
+                    <!-- question -->
+                    <div class="faq_question">
+                        <input type="text"  value="<?php echo($faq[0]); ?>" placeholder="Question">
+                    </div>
+                    <!-- answer -->
+                    <div class="faq_answer">
+                        <input type="text"  value="<?php echo($faq[1]); ?>" placeholder="Answer">
+                    </div>
                 </div>
                 <!-- edit buttons -->
                 <div class="edit">
                     <button class="remove">-</button>
                 </div>
             </div>
-             <?php } ?>
+             <?php
+               $faq_index++;
+             }
+            endif;
+            ?>
         </div>
         
         <!-- new faq with jquery -->
         <div id="new_faq_wrap">
-            <button id="new_faq_btn">افزودن faq جديد</button>
+            <button id="new_faq_btn">+ add another FAQ</button>
+        </div>
+
+        <div id="faq_page_id">
+            <input type="text" name="page_id" id="page_id" placeholder="Page ID" value="<?php echo $page_id; ?>"><br>
         </div>
         
         <!-- save faqs in database with ajax -->
-        <div id="new_faq_wrap">
+        <div id="save_faq_wrap">
             <button id="faq_save_to_db">ذخيره</button>
-            <span id="result_text"></span>
+            <p id="result_text"></p>
         </div>
     </div>
 
